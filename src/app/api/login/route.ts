@@ -1,28 +1,42 @@
 import { log } from 'console'
+import { cookies } from 'next/headers'
 import { NextRequest } from 'next/server'
 
 const BASE_URL = 'https://api.origamid.online/conta'
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json()
-    const username = body.username
-    const password = body.password
+    const { username, password } = (await request.json()) as {
+      username: string
+      password: string
+    }
 
     const response = await fetch(`${BASE_URL}/login`, {
       headers: {
         'Content-Type': 'application/json',
       },
-      method: 'post',
+      method: 'POST',
       body: JSON.stringify({
         username,
         password,
       }),
     })
 
-    const data = response.json()
+    if (!response.ok) {
+      return Response.json({
+        status: response.status,
+        statusText: response.statusText,
+      })
+    }
 
-    return Response.json({ ok: true, body, data })
+    const { token } = await response.json()
+
+    cookies().set('token', token)
+
+    return Response.json({
+      status: response.status,
+      statusText: response.statusText,
+    })
   } catch (error) {
     log(error)
     return Response.json({ ok: false, error })

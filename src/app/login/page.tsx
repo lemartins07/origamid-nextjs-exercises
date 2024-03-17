@@ -1,13 +1,14 @@
 'use client'
 
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
 
 export default function LoginPage() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
-  async function handleClick() {
-    const response = await fetch('http://localhost:3000/api/login', {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    const response = await fetch('/api/login', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',
@@ -17,14 +18,16 @@ export default function LoginPage() {
         password,
       }),
     })
-    const data = await response.json()
-    console.log(data)
+
+    if (response.ok) {
+      window.location.href = '/'
+    }
   }
 
   return (
     <main>
       <h1>Login:</h1>
-      <form>
+      <form onSubmit={handleSubmit}>
         <input
           name="username"
           placeholder="Username"
@@ -36,9 +39,7 @@ export default function LoginPage() {
           placeholder="Password"
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="button" onClick={handleClick}>
-          Sign In
-        </button>
+        <button type="submit">Sign In</button>
       </form>
     </main>
   )

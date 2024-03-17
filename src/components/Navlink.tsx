@@ -1,6 +1,9 @@
 import Link from 'next/link'
 
-export function Navlink() {
+export async function Navlink() {
+  const response = await fetch('https://api.origamid.online/conta/perfil')
+  const data = await response.json()
+
   return (
     <ul className="menu">
       <li>
