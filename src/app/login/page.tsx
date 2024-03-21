@@ -5,6 +5,7 @@ import { FormEvent, useState } from 'react'
 export default function LoginPage() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -19,9 +20,14 @@ export default function LoginPage() {
       }),
     })
 
-    if (response.ok) {
+    const data = await response.json()
+
+    if (data.status === 200) {
       window.location.href = '/'
+      return
     }
+
+    setError('Usuário ou senha inválidos.')
   }
 
   return (
@@ -39,6 +45,7 @@ export default function LoginPage() {
           placeholder="Password"
           onChange={(e) => setPassword(e.target.value)}
         />
+        <span className="error">{error}</span>
         <button type="submit">Sign In</button>
       </form>
     </main>

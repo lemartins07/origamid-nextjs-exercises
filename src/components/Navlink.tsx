@@ -1,7 +1,15 @@
+import { cookies } from 'next/headers'
 import Link from 'next/link'
 
 export async function Navlink() {
-  const response = await fetch('https://api.origamid.online/conta/perfil')
+  const token = cookies().get('token') as { name: string; value: string }
+
+  const response = await fetch('https://api.origamid.online/conta/perfil', {
+    method: 'GET',
+    headers: {
+      Authorization: 'Bearer ' + token?.value,
+    },
+  })
   const data = await response.json()
 
   return (
@@ -27,7 +35,11 @@ export async function Navlink() {
         <Link href="/cursos">Cursos</Link>
       </li>
       <li>
-        <Link href="/login">Login</Link>
+        {data.autorizado ? (
+          <span>{data.usuario}</span>
+        ) : (
+          <Link href="/login">Login</Link>
+        )}
       </li>
     </ul>
   )

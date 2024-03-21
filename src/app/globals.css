@@ -182,6 +182,12 @@ img {
   display: flex;
 }
 
+.error {
+  color: crimson;  
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
 @media (max-width: 768px) {
   .menu {
     font-size: .75rem

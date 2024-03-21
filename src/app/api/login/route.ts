@@ -31,7 +31,10 @@ export async function POST(request: NextRequest) {
 
     const { token } = await response.json()
 
-    cookies().set('token', token)
+    cookies().set('token', token, {
+      secure: true,
+      httpOnly: true,
+    })
 
     return Response.json({
       status: response.status,
