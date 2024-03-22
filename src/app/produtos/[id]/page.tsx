@@ -14,6 +14,11 @@ type PageParams = {
 export default async function Page({ params }: PageParams) {
   const response = await fetch(
     `https://api.origamid.online/produtos/${params.id}`,
+    {
+      next: {
+        revalidate: 5,
+      },
+    },
   )
 
   const data = (await response.json()) as Produto

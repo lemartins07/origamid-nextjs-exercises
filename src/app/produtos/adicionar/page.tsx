@@ -28,10 +28,10 @@ export default function AdicionarPage() {
     }))
   }
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
     console.log(formData)
-    adicionarProduto(formData)
+    await adicionarProduto(formData)
   }
 
   return (
