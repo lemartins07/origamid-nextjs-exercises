@@ -14,7 +14,7 @@ export default function ProductList({ produtos }: ProductListProps) {
     <ul>
       {produtos.map((produto) => (
         <li key={produto.id}>
-          <Link href={`/produto/${produto.id}`}>{produto.nome}</Link>
+          <Link href={`/produtos/${produto.id}`}>{produto.nome}</Link>
         </li>
       ))}
     </ul>

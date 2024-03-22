@@ -24,10 +24,13 @@ export async function Navlink() {
         <span>Produtos {'>'}</span>
         <ul>
           <li>
-            <Link href="/server-produtos">Server Produtos</Link>
+            <Link href="/produtos/server">Server</Link>
           </li>
           <li>
-            <Link href="/client-produtos">Client Produtos</Link>
+            <Link href="/produtos/client">Client</Link>
+          </li>
+          <li>
+            <Link href="/produtos/adicionar">Adicionar</Link>
           </li>
         </ul>
       </li>
@@ -40,6 +43,9 @@ export async function Navlink() {
         ) : (
           <Link href="/login">Login</Link>
         )}
+      </li>
+      <li>
+        <Link href="/acoes">Ações</Link>
       </li>
     </ul>
   )
